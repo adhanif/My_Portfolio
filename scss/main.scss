@@ -1,37 +1,12 @@
+@import "config";
+@import "menu";
 $primary-color: #444;
 $secondary-color: #eece1a;
-$home-img: true;
-$home-image: url(../img/background2.jpg);
-$background-opacity: 0.9;
-
-@mixin easout {
-  transition: all 0.5 ease-out;
-}
-
-@mixin background {
-  @if $home-img {
-    &#bg-img {
-      background: $home-image;
-      background-attachment: fixed;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      &:after {
-        content: "";
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-        background: rgba($primary-color, 0.5);
-      }
-    }
-  }
-}
-
 * {
   box-sizing: border-box;
+}
+@mixin easeout {
+  transition: all 0.8s ease-out;
 }
 
 body {
@@ -81,7 +56,7 @@ main {
       padding: 0.4rem;
       &:hover {
         color: $secondary-color;
-        @include easout();
+        @include easeout;
       }
     }
   }
@@ -90,5 +65,130 @@ main {
     h1 {
       margin-top: 20vh;
     }
+  }
+}
+
+// Menu button and menu bar
+.menu-btn {
+  position: absolute;
+  top: 35px;
+  right: 35px;
+  cursor: pointer;
+  z-index: 3;
+  @include easeout;
+  .bt-line {
+    background: white;
+    width: 28px;
+    height: 3px;
+    margin: 0 0 5px 0;
+  }
+  //Rotate into Xwith Menu Lines
+  &.close {
+    transform: rotate(180deg);
+    .bt-line {
+      //Line 1- Rotate#
+      &:nth-child(1) {
+        // background: red;
+        transform: rotate(46deg) translate(6px, 4px);
+      }
+      //Line2- Hide
+      &:nth-child(2) {
+        visibility: hidden;
+      }
+      //Line3- Rotate
+      &:nth-child(3) {
+        // background: rgb(35, 186, 63);
+        transform: rotate(-46deg) translate(8px, -5px);
+      }
+    }
+  }
+}
+
+.menu {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  opacity: 0.9;
+  visibility: hidden;
+
+  &.show {
+    visibility: visible;
+  }
+
+  &-nav,
+  &-branding {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    float: left;
+    width: 50%;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  &-nav {
+    margin: 0;
+    padding: 0;
+    background: darken($primary-color, 5);
+    list-style: none;
+    transform: translate3d(0, -100%, 0);
+    @include easeout;
+    &.show {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  &-branding {
+    background: $primary-color;
+    transform: translate3d(0, 100%, 0);
+    @include easeout;
+
+    &.show {
+      transform: translate3d(0, 0, 0);
+    }
+
+    .portrait {
+      width: 250px;
+      height: 250px;
+      background: url("../img/portrait.jpg");
+      border-radius: 50%;
+      border: solid 3px $secondary-color;
+      // transform: translate3d(0, 100%, 0);
+    }
+  }
+  .nav-item {
+    transform: translate3d(-100%, 0, 0);
+    @include easeout;
+    &.show {
+      //slide in from right
+      transform: translate3d(0, 0, 0);
+    }
+    &.current > a {
+      color: $secondary-color;
+    }
+  }
+
+  .nav-link {
+    // visibility: hidden;
+    display: inline-block;
+    position: relative;
+    font-size: 30px;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 1rem 0;
+    color: set-text-color($primary-color);
+    text-decoration: none;
+    @include easeout;
+    &:hover {
+      color: $secondary-color;
+    }
+  }
+}
+
+//Delay each nav item
+@for $x from 1 through 4 {
+  .nav-item:nth-child(#{$x}) {
+    transition-delay: $x * 0.1s;
   }
 }
