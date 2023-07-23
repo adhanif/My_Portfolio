@@ -3,12 +3,15 @@
   "version": "1.0.0",
   "description": "Responsive Portfolio Website",
   "main": "index.js",
+  "homepage": "http://adhanif.github.io/My_Portfolio",
   "scripts": {
-    "sass": "node-sass -w scss/ -o dist/css/ --recursive"
+    "sass": "node-sass -w scss/ -o dist/css/ --recursive",
+    "deploy": "gh-pages -d dist"
   },
   "author": "Adnan Hanif",
   "license": "MIT",
   "dependencies": {
+    "gh-pages": "^5.0.0",
     "node-sass": "^9.0.0"
   }
 }
